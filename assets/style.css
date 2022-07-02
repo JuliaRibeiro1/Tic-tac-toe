@@ -1,0 +1,17 @@
+
+.tic-tac-toe {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.tic-tac-toe-board {
+    display: grid;
+    grid-template-columns: repeat(3,100px);
+    grid-auto-rows: minmax(100px,auto);
+}
+.tic-tac-toe .grid-item {
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+
