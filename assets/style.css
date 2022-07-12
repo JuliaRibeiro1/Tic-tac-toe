@@ -1,8 +1,27 @@
 
-.tic-tac-toe {
+:root {
+    --blue: rgb(185, 182, 255);
+    --bBlue: rgb(155, 153, 218);
+    --pink: rgb(240, 52, 83);
+    --purple: rgb(255, 39, 255);
+    --bPurple : rgb(206, 15, 206);
+    
+    
+}
+body {
+    background-color: rgb(44, 44, 44);
+}
+.tic-tac-toe{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.tic-tac-toe {
+    display: none;
+    flex-direction: column;
+    color: white;
 }
 .tic-tac-toe-board {
     display: grid;
@@ -10,8 +29,211 @@
     grid-auto-rows: minmax(100px,auto);
 }
 .tic-tac-toe .grid-item {
-    border-right: 2px solid black;
-    border-bottom: 2px solid black;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+}
+.tic-tac-toe-start-page-animation {
+   width:100%;
+   height: 100%;
+}
+.game-start-page-container {
+    flex-direction: column;
+    display: flex;
+    
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+.item {
+  font-size: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  line-height: 0px;
+}
+.animation-letters .item:nth-child(-n+3) {
+    animation: fade 3s alternate-reverse infinite;
+}
+.animation-letters .item:nth-child(n+4):nth-last-child(n+4) {
+    animation: fade 3.5s alternate-reverse infinite;
+}
+.animation-letters .item:nth-last-child(-n+3) {
+    animation: fade 4s alternate-reverse infinite;
+}
+.animation-letters {
+    height: 150px;
+    display:grid;
+    grid-template-columns: repeat(3,100px);
+    grid-gap:20px ;
+    text-align: center;
+    margin-top: 6em;
+    justify-content: center;
+    text-transform: uppercase;
+}
+.tic-tac-toe-animation {
+    position: relative;
+    bottom: 150px;
+    height: 50px;
+    z-index: 1;
+}
+.row1,.row2 {
+    border-bottom: 2px solid rgb(255, 39, 255);
+    text-align: center;
+    margin-top: 3em;
+    animation: growR 1s forwards;
+}
+.rows {
+   height: 70px;
+    position: relative;
+    left: 60px;
+    display: flex;
+    justify-content: center;
+    align-content: space-between;
+    flex-direction: column;
+}
+.columns {
+   display: flex;
+   justify-content: space-evenly;
+   position: relative;
+   height: 250px;
+   bottom: 130px;
+   width: 300px;
+   left:80px;
+   z-index: 3;
+   align-content: space-around;
 }
 
+.column1,.column2 {
+   border-left: 2px solid var(--blue);
+}
+.column1 {
+    animation: growC 3.5s forwards infinite;
+}
+.column2 {
+    animation: growC 3s backwards infinite;
+}
+.row1 {
+    animation: growR 2.5s alternate infinite;
+}
+.row2 {
+    animation: growR 3s forwards infinite;
+}
+
+@keyframes growC {
+    from {
+        height: 0;
+    }
+    to {
+        height: 230px;
+    }
+}
+@keyframes growR {
+    from {
+        width:0;
+    }
+    to {
+        width: 330px;
+    }
+}
+@keyframes fade {
+    from {
+        color: transparent;
+    }
+    to {
+        color: white;
+    }
+}
+.choosePlayer {
+   flex-direction: column;
+    text-align: center;
+    color: white;
+    margin-top: 0;
+}
+.choosePlayer h2 {
+    font-size: 2rem;
+    margin-top: 0;
+}
+.playersBtns,.choosePlayer {
+    display: flex;
+    justify-content: center; 
+}
+.xPlayerBtn,.oPlayerBtn {
+    width: 50px;
+    margin-right: 1em;
+    background-color: var(--pink);
+    border: none;
+    color: white;
+
+}
+.checkboxes {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.checkboxes button {
+    margin-left: 1.5em;
+}
+.playersBtns button {
+   padding: 16px;
+   width: 200px;
+   margin-top: 1em;
+   border-radius: 1.5em;
+   font-size: 1rem;
+   border: none;
+   text-align: center;
+   height: 50px;
+   color: white;
+   margin: 1em;
+}
+.onePlayerBtn {
+    background-color: var(--purple);
+}
+.twoPlayersBtn {
+    background-color: var(--blue)
+}
+.onePlayerBtn:hover,.twoPlayersBtn:hover {
+   padding: 13px;
+   box-shadow: 0px 15px 10px rgb(16, 16, 16);
+    
+}
+.onePlayerBtn:hover {
+    border: 3px solid var(--purple);
+    background-color: var(--bPurple);
+    transform: scale(1.2);
+
+}
+.twoPlayersBtn:hover {
+   border: 3px solid var(--blue);
+   background-color: var(--bBlue);
+   transform: scale(1.2);
+  
+}
+
+.twoPlayersBtn::after,.onePlayerBtn::after {
+    content: "";
+    display: inline-block;
+    height:50px;
+    width: 100%;
+    border-radius: 1.5em;
+    position: relative;
+    top: -30px;
+    left: 0;
+    z-index: -1;
+    transition: 1s;
+}
+.twoPlayersBtn:hover::after,.onePlayerBtn:hover::after {
+   transform: scale(1.3);
+    opacity: 0;
+    background-color: white; 
+}
+.tic-tac-toe-players {
+    display:flex;
+    font-size: 2rem;
+    width: 100%;
+    justify-content: space-around;
+}
+.tic-tac-toe-board-container {
+    margin-top: 8%;
+   
+}
 
