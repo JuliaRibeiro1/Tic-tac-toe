@@ -1,3 +1,4 @@
+//VARIABLES 
 const squares = document.querySelectorAll(".grid-item")
 const xPlayerBtn = document.querySelector(".xPlayerBtn")
 const oPlayerBtn = document.querySelector(".oPlayerBtn")
@@ -8,12 +9,23 @@ const xPlayer = document.querySelector("xPlayer")
 const gameStartPageContainer = document.querySelector(".game-start-page-container")
 const ticTacToeContainer = document.querySelector(".tic-tac-toe")
 const firstPlayerCheckbox = document.querySelector(".firstPlayerCheckbox")
-
-
+const restartGameContainer = document.querySelector(".tic-tac-toe-restart-game-container")
+const backMenuBtn = document.querySelector(".backToMenuBtn")
+const restartGameBtn = document.querySelector(".restartGameBtn")
+let winnerPlayer = document.querySelector(".tic-tac-toe-winner-player")
+const positionsArr = Array.from(squares)
+let empty = [...positionsArr]
 let lastArrItem;
 let xOrOArr = []
-let boardPositions = []
-const positionsArr = Array.from(squares)
+let firstRow;
+let secondRow;
+let thirdRow;
+let firstColumn;
+let secondColumn;
+let thirdColumn;
+let checkBtn = false
+
+
 oPlayerBtn.addEventListener("click",() =>{
      lastArrItem = "O"
   
@@ -21,128 +33,185 @@ oPlayerBtn.addEventListener("click",() =>{
 xPlayerBtn.addEventListener("click",() =>{
      lastArrItem = "X"
 })
-let firstRow;
-let secondRow;
-let thirdRow;
-let firstColumn;
-let secondColumn;
-let thirdColumn;
+
 
 function checkingWinner(array) {
 let winner = array.every(element => {
-  if(array[0] !== "") {
-    var e = element
-    return array[0] === element;
+  if(array[0].textContent !== "") {
+    return array[0].textContent === element.textContent;
   }
-  /*return winner;*/
+  
 })
 if(winner) {
-  console.log(e)
+  (setTimeout(() =>{
+    restartGameContainer.style.display = "flex"
+    winnerPlayer.textContent = array[0].textContent + " is the winner"
+  },3000))
+}
+if(xOrOArr.length > 8) {
+if(!winner) {
+  console.log(array);
+  (setTimeout(() =>{
+    restartGameContainer.style.display = "flex"
+    winnerPlayer.textContent = "No one won"
+  },3000))
+}
 }
   }
+  
 const squareArr = Array.from(squares).map(squares => squares.addEventListener("click",function(e){
- firstRow = [positionsArr[0].textContent,positionsArr[1].textContent,positionsArr[2].textContent] 
- secondRow = [positionsArr[4].textContent, positionsArr[5].textContent, positionsArr[7].textContent]
- thirdRow = [positionsArr[6].textContent,positionsArr[7].textContent, positionsArr[6].textContent]
- firstColumn = [positionsArr[0].textContent,positionsArr[3].textContent,positionsArr[6].textContent]
- secondColumn = [positionsArr[1].textContent,positionsArr[4].textContent,positionsArr[7].textContent]
- thirdColumn = [positionsArr[2].textContent,positionsArr[4].textContent,positionsArr[6].textContent]
+
+ firstRow = [positionsArr[0],positionsArr[1],positionsArr[2]] 
+ secondRow = [positionsArr[4], positionsArr[5], positionsArr[7]]
+ thirdRow = [positionsArr[6],positionsArr[7], positionsArr[6]]
+ firstColumn = [positionsArr[0],positionsArr[3],positionsArr[6]]
+ secondColumn = [positionsArr[1],positionsArr[4],positionsArr[7]]
+ thirdColumn = [positionsArr[2],positionsArr[4],positionsArr[6]]
+ diagonal = [positionsArr[0],positionsArr[4],positionsArr[8]]
+ reverseDiagonal = [positionsArr[2],positionsArr[4],positionsArr[6]]
+ 
 function fillSquare() {
   xOrOArr.push(lastArrItem)
-    squares.textContent = lastArrItem
+  squares.textContent = lastArrItem
+  if(checkBtn) {
+    
+    for(let i = 0; i < empty.length; i++) {
+      if(empty[i].textContent !== "") {
+       empty.splice(i,1)
+    
+      }
+    }
+    computerPosition()
+  }
+    
 }
 
 if((xOrOArr.length < 9) &&(squares.textContent === "")) {
-  if(lastArrItem == "X" ) {
-     fillSquare()
-     lastArrItem = "O"
-  }
-  else if(lastArrItem == "O") {
-     fillSquare()
-     lastArrItem = "X"   
+  
+  
+  fillSquare()
+  checkLastArrItem()
+      
+  
+    checkingWinner(firstRow)
+    checkingWinner(secondRow)
+    checkingWinner(thirdRow)
+    checkingWinner(firstColumn)
+    checkingWinner(secondColumn)
+    checkingWinner(thirdColumn)
+    checkingWinner(diagonal)
+    checkingWinner(reverseDiagonal)
+  
+  
 }
-checkingWinner(firstRow)
-checkingWinner(secondRow)
-checkingWinner(thirdRow)
-checkingWinner(firstColumn)
-checkingWinner(secondColumn)
-checkingWinner(thirdColumn)
-}
+
+
 }))
+
 let cont = 0
 let checking = false 
 xPlayerBtn.addEventListener("click",(e) =>{
-/* function a(fun){
-    console.log("foix")
-    fun(e)
-  }a(check)*/
   twoOrOnePlayers()
   lastArrItem = "X"
- /* if(!check) {
-    lastArrItem = "O"
-  }
-  else {
-    lastArrItem = "X"
-  }*/
-
-  
-  console.log(xOrOArr)
-
+ 
 })
 
 oPlayerBtn.addEventListener("click",(e) => {
-/*function a (fun) {
-    console.log("foiO")
-    fun(e)
-  }a(check)*/
   twoOrOnePlayers()
   lastArrItem = "O"
-  /*if(!check) {
-    lastArrItem = "X"
+ 
+})
+restartGameBtn.addEventListener("click",() => {
+  restartGame()
+})
+backMenuBtn.addEventListener("click",() => {
+  gameStartPageContainer.style.display = "flex"
+  ticTacToeContainer.style.display = "none"
+  restartGame()
 
-  }
-  else {
-    
-  }*/
-  console.log(xOrOArr)
 })
 
-function check() {
- /* firstPlayerCheckbox.addEventListener("click",(e) => {
-  })*/
-  console.log(lastArrItem)
+  
+
+function checkLastArrItem() {
+  if(lastArrItem == "X" ) {
+    /*fillSquare()*/
+     lastArrItem = "O" 
+    /* computerPosition()*/
+  }
+
+  else if(lastArrItem == "O") {
+    /*fillSquare()*/
+     lastArrItem = "X" 
+     /*computerPosition() */  
+  }
+  }
+function checkFirstPlayer() {
   if(!firstPlayerCheckbox.checked) {
-    if(lastArrItem == "X") {
+   if(lastArrItem == "X") {
       lastArrItem = "O"
     }
     else if(lastArrItem == "O") {
       lastArrItem = "X"
     }
+   /* checkLastArrItem()*/
     console.log("checked")
-  }
-  else {
-    console.log("not checked")
   }
 }
 
 function twoOrOnePlayers() {
   twoPlayersBtn.addEventListener('click',() => {
     startGame()
-
   })
   onePlayerBtn.addEventListener('click',() => {
     startGame()
+    checkBtn = true
+    
   })
-
-  
   }
 
 function startGame () {
   gameStartPageContainer.style.display = "none"
   ticTacToeContainer.style.display = "flex"
-  check()
-
-
+  checkFirstPlayer()
+  
 }
+function restartGame() {
+  xOrOArr = []
+  for(let i = 0; i < positionsArr.length; i++) {
+    positionsArr[i].textContent = "";
+
+  }
+  restartGameContainer.style.display = "none"
+}
+
+function computerPosition() {
+  for(let i = 0; i < empty.length; i++) {
+    if(empty[i].textContent !== "") {
+     empty.splice(i,1)
+  
+    }
+  }
+  setTimeout(() => {
+    
+  let computerPosition = Math.floor(Math.random() * empty.length)
+  console.log(computerPosition)
+  
+    
+empty[computerPosition].textContent = lastArrItem
+    xOrOArr.push(lastArrItem)
+    
+   
+  checkingWinner(firstRow)
+  checkingWinner(secondRow)
+  checkingWinner(thirdRow)
+  checkingWinner(firstColumn)
+  checkingWinner(secondColumn)
+  checkingWinner(thirdColumn)
+  checkingWinner(diagonal)
+  checkingWinner(reverseDiagonal)
+  },1000); 
+}
+
 
 
