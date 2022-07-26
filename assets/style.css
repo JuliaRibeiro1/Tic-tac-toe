@@ -168,14 +168,24 @@ body {
     background-color: var(--pink);
     border: none;
     color: white;
-
+    padding: 0.5em;
 }
-.checkboxes {
+.add:before {
+    content: "choose your player";
+    background-color: red;
+    width: 30%;
+    height: 55%;
+    top:-20px;
+    
+    position: absolute;
+}
+.xOrObtns {
     display: flex;
     justify-content: center;
     align-content: center;
+    position: relative;
 }
-.checkboxes button {
+.xOrObtns button {
     margin-left: 1.5em;
 }
 .playersBtns button,.tic-tac-toe-restart-game button {
