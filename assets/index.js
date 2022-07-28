@@ -31,8 +31,8 @@ let checkBtn = false
 const squareArr = Array.from(squares).map(squares => squares.addEventListener("click",function(e){
 //ONE OF THESE ROWS OR COLUMNS SHOULD BE FILLED WITH THE SAME ITEM 
  firstRow = [positionsArr[0],positionsArr[1],positionsArr[2]] 
- secondRow = [positionsArr[4], positionsArr[5], positionsArr[7]]
- thirdRow = [positionsArr[6],positionsArr[7], positionsArr[6]]
+ secondRow = [positionsArr[3], positionsArr[4], positionsArr[5]]
+ thirdRow = [positionsArr[6],positionsArr[7], positionsArr[8]]
  firstColumn = [positionsArr[0],positionsArr[3],positionsArr[6]]
  secondColumn = [positionsArr[1],positionsArr[4],positionsArr[7]]
  thirdColumn = [positionsArr[2],positionsArr[4],positionsArr[6]]
@@ -40,15 +40,13 @@ const squareArr = Array.from(squares).map(squares => squares.addEventListener("c
  reverseDiagonal = [positionsArr[2],positionsArr[4],positionsArr[6]]
  //fillSquare WILL BE CALLED EVERYTIME A SQUARE IS CLICKED ON
 function fillSquare() {
-  /*if((!firstPlayerCheckbox.checked)&&(checkBtn)) {
-    checkLastArrItem()
-  }*/
 //WILL CHECK IF THERE'S ONLY ONE PLAYER, IF IT IS computerPosition WILL BE CALLED  
 if(checkBtn) {
  if((!firstPlayerCheckbox.checked)) {
     checkLastArrItem()
   }
   cleanPositionsArr()
+  checkingWinner()
   console.log(lastArrItem)
   setTimeout(() => {
   console.log(lastArrItem)
@@ -58,7 +56,6 @@ if(checkBtn) {
   xOrOArr.push(lastArrItem)
   squares.textContent = lastArrItem
 }
-
 if((xOrOArr.length < 9) &&(squares.textContent === "")) {
     fillSquare()
     checkLastArrItem()
@@ -74,6 +71,13 @@ oPlayerBtn.addEventListener("click",(e) => {
  // twoOrOnePlayers()
   lastArrItem = "O"
 })
+twoPlayersBtn.addEventListener('click',() => {
+  checkPlayer()
+ })
+ onePlayerBtn.addEventListener('click',() => {4
+   checkBtn = true
+   checkPlayer()
+ })
 restartGameBtn.addEventListener("click",() => {
   restartGame()
 })
@@ -88,11 +92,31 @@ function checkingWinner(array) {
   let winner = array.every(element => {
     if(array[0].textContent !== "") {
       return array[0].textContent === element.textContent;
+
     }})
   if(winner) {
-    console.log(array)
-    winnerContainerPopUp()
-    winnerPlayer.textContent = array[0].textContent + " is the winner"
+   /* let winnerAnimation = array.every(element => {
+      element.style.cssText = "background-color:pink"
+      return element;
+      })*/
+      
+      if((array === firstRow) ^ (array === secondRow) ^ (array === thirdRow)) {
+        console.log("OI")
+        array[0].classList.add("winnerRowAnimation")
+      }
+      /*console.log(array === firstRow)
+      console.log(array === secondRow)
+      console.log(array === thirdRow)*/
+      else if((array === firstColumn) ^ (array === secondColumn) ^ (array === thirdColumn)) {
+        console.log("OI")
+        array[0].classList.add("winnerColumnAnimation")
+      }
+      else if(array === diagonal) {
+        console.log("opa")
+        array[0].classList.add("winnerLeftDiagonalAnimation")
+      }
+      winnerContainerPopUp()
+      winnerPlayer.textContent = array[0].textContent + " is the winner"
   }
 //CHECKING IF NO ONE WON WHEN THE BOARD IS COMPLETELY FILLED
   if(xOrOArr.length >= 10) {
@@ -116,22 +140,13 @@ function checkFirstPlayer() {
     computerPosition()
    }
   }}
+//WILL CHECK IF THE USER CHOSE A PLAYER OR NOT
 function checkPlayer() {
   if(lastArrItem == "") {
-    xOrObtns.classList.add("add")
+    xOrObtns.classList.add("error")
   }else {
     startGame()
   }}
-//WILL CHECK IF ITS 2 PLAYER OR JUST ONE
-//function twoOrOnePlayers() {
-  twoPlayersBtn.addEventListener('click',() => {
-   checkPlayer()
-  })
-  onePlayerBtn.addEventListener('click',() => {4
-    checkBtn = true
-    checkPlayer()
-  })
-
 function startGame () {
   gameStartPageContainer.style.display = "none"
   ticTacToeContainer.style.display = "flex"
@@ -140,7 +155,7 @@ function startGame () {
 //WILL TELL WHO WON 
 function winnerContainerPopUp(){(setTimeout(() =>{
   restartGameContainer.style.display = "flex"
-},2000))
+},4000))
 }
 //WILL CHECK IF A COLUMN OR ROW IS FILLED ONLY WITH X OR O, MEANING THAT THE GAME IS OVER
 function checkingWinnerFunctions() {

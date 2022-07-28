@@ -37,6 +37,7 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 1.5rem;
+    position: relative;
 }
 .tic-tac-toe-start-page-animation {
    width:100%;
@@ -108,6 +109,7 @@ body {
    align-content: space-around;
 }
 
+
 .column1,.column2 {
    border-left: 2px solid var(--blue);
 }
@@ -170,15 +172,7 @@ body {
     color: white;
     padding: 0.5em;
 }
-.add:before {
-    content: "choose your player";
-    background-color: red;
-    width: 30%;
-    height: 55%;
-    top:-20px;
-    
-    position: absolute;
-}
+
 .xOrObtns {
     display: flex;
     justify-content: center;
@@ -209,7 +203,6 @@ body {
 .onePlayerBtn:hover,.twoPlayersBtn:hover {
    padding: 13px;
    box-shadow: 0px 15px 10px rgb(16, 16, 16);
-    
 }
 .onePlayerBtn:hover {
     border: 3px solid var(--purple);
@@ -220,7 +213,6 @@ body {
    border: 3px solid var(--blue);
    background-color: var(--bBlue);
    transform: scale(1.2);
-
 }
 .twoPlayersBtn::after,.onePlayerBtn::after {
     content: "";
@@ -275,14 +267,12 @@ body {
 }
 .restartGameBtn {
     background-color: var(--purple);
-    
 }
 .backToMenuBtn {
     background-color: var(--blue);
 }
 .backToMenuBtn::before,.restartGameBtn::before {
     content: "";
-    
     background-color: rgb(15, 15, 15);
     z-index: 1;
     position: absolute;
@@ -308,4 +298,61 @@ body {
         width: 100%;
     }
 }
+.error:before {
+    content: "choose your player";
+    background-color: red;
+    width: 30%;
+    height: 55%;
+    top:-20px;
+    position: absolute;
+}
+.winnerRowAnimation:before,.winnerColumnAnimation:before,.winnerLeftDiagonalAnimation:before {
+    content: "";
+    background-color: white;
+    border-radius: 30px;
+    
+    
+    position: absolute;
+    z-index: 1;
+}
+.winnerRowAnimation:before{
+    height: 20px;
+    bottom: 40px;
+    left: 0px;
+    animation: 2s rowAnimation forwards;
+    z-index: 1;
+}
+.winnerColumnAnimation:before {
+    top:0px;
+    width: 20px;
+    animation: 2s columnAnimation forwards;
+    z-index: 1;
+}
+.winnerLeftDiagonalAnimation:before {
+    bottom: 0px;
+    top: 0px;
+    left: -10px;
+    transform: rotate(-40deg);
+    animation: 2s columnAnimation forwards;
+    z-index: 1;
+    background-color: aqua;
+    width: 20px;
 
+}
+@keyframes rowAnimation {
+    from {
+        width: 0px;
+    }
+    to {
+        width: 300px;
+    }
+}
+@keyframes columnAnimation {
+    from {
+        
+        height: 0px;
+    }
+    to {
+        height: 300px;
+    }
+}
