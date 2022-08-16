@@ -9,7 +9,17 @@
     
 }
 body {
+   
     background-color: rgb(44, 44, 44);
+    
+}
+
+
+html{
+    
+    overflow-x: hidden;
+    position: relative;
+   
 }
 .tic-tac-toe{
     display: flex;
@@ -38,6 +48,12 @@ body {
     align-items: center;
     font-size: 1.5rem;
     position: relative;
+}
+.grid-item:nth-child(n+7) {
+    border-bottom: none;
+}
+.grid-item:nth-child(3n+3) {
+    border-right: none;
 }
 .tic-tac-toe-start-page-animation {
    width:100%;
@@ -108,7 +124,6 @@ body {
    z-index: 3;
    align-content: space-around;
 }
-
 
 .column1,.column2 {
    border-left: 2px solid var(--blue);
@@ -185,7 +200,6 @@ body {
 .playersBtns button,.tic-tac-toe-restart-game button {
    padding: 16px;
    width: 200px;
-   /*margin-top: 0.5em;*/
    border-radius: 1.5em;
    font-size: 1rem;
    border: none;
@@ -235,10 +249,11 @@ body {
     display:flex;
     font-size: 2rem;
     width: 100%;
+
     justify-content: space-around;
 }
 .tic-tac-toe-board-container {
-    margin-top: 8%;
+    margin-top: 30%;
 }
 .tic-tac-toe-restart-game-container {
     display: none;
@@ -248,7 +263,7 @@ body {
     left: 50%; 
     top: 50%;
     width: 30%;
-    height: 55%;
+    height: 90%;
     transform: translate(-50%,-50%);
     background-color: white;
 }
@@ -301,58 +316,84 @@ body {
 .error:before {
     content: "choose your player";
     background-color: red;
-    width: 30%;
+    width: 38%;
     height: 55%;
-    top:-20px;
+    top:-25px;
+    font-size: 14px;
     position: absolute;
 }
-.winnerRowAnimation:before,.winnerColumnAnimation:before,.winnerLeftDiagonalAnimation:before {
+.winnerRowAnimation:before,.winnerColumnAnimation:before,.winnerLeftDiagonalAnimation:before,.winnerRightDiagonalAnimation:before {
     content: "";
     background-color: white;
     border-radius: 30px;
-    
-    
     position: absolute;
+    background-color: rgba(245, 50, 252, 0.6);
     z-index: 1;
 }
 .winnerRowAnimation:before{
     height: 20px;
     bottom: 40px;
     left: 0px;
-    animation: 2s rowAnimation forwards;
-    z-index: 1;
+    animation: 1s rowAnimation forwards;
 }
 .winnerColumnAnimation:before {
     top:0px;
     width: 20px;
-    animation: 2s columnAnimation forwards;
-    z-index: 1;
+    animation: 1s columnAnimation forwards;
 }
 .winnerLeftDiagonalAnimation:before {
-    bottom: 0px;
-    top: 0px;
-    left: -10px;
-    transform: rotate(-40deg);
-    animation: 2s columnAnimation forwards;
-    z-index: 1;
-    background-color: aqua;
-    width: 20px;
-
+    transform: rotate(45deg);
+    animation: 1s diagonalAnimation forwards;
+    height: 20px;
+}
+.winnerRightDiagonalAnimation:before {
+    transform:rotate(-45deg);
+    animation: 1s diagonalAnimation infinite;
+    height: 20px;
 }
 @keyframes rowAnimation {
     from {
+        
         width: 0px;
     }
     to {
+       
         width: 300px;
     }
 }
 @keyframes columnAnimation {
     from {
-        
         height: 0px;
     }
     to {
         height: 300px;
+    }
+}
+@keyframes diagonalAnimation {
+    from {
+        width: 0px;
+    }
+    to {
+        width: 350px;
+    }
+}
+@media (min-width:300px) and (max-width:600px) {
+    
+    .playersBtns {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px; 
+    }
+    .columns {
+        left: 20px;
+    }
+    .rows {
+        left: 10px;
+    }
+    .tic-tac-toe-restart-game-container {
+        height: 30%;
+        width: 90%;
+        top: 30%;
     }
 }

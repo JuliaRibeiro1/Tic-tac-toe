@@ -41,18 +41,18 @@ const squareArr = Array.from(squares).map(squares => squares.addEventListener("c
  //fillSquare WILL BE CALLED EVERYTIME A SQUARE IS CLICKED ON
 function fillSquare() {
 //WILL CHECK IF THERE'S ONLY ONE PLAYER, IF IT IS computerPosition WILL BE CALLED  
+
 if(checkBtn) {
- if((!firstPlayerCheckbox.checked)) {
+  cleanPositionsArr()
+  if(!firstPlayerCheckbox.checked) {
     checkLastArrItem()
   }
-  cleanPositionsArr()
-  checkingWinner()
-  console.log(lastArrItem)
   setTimeout(() => {
-  console.log(lastArrItem)
   computerPosition()
+  checkingWinner()
   },500)
 }
+
   xOrOArr.push(lastArrItem)
   squares.textContent = lastArrItem
 }
@@ -92,30 +92,25 @@ function checkingWinner(array) {
   let winner = array.every(element => {
     if(array[0].textContent !== "") {
       return array[0].textContent === element.textContent;
-
     }})
   if(winner) {
-   /* let winnerAnimation = array.every(element => {
-      element.style.cssText = "background-color:pink"
-      return element;
-      })*/
-      
       if((array === firstRow) ^ (array === secondRow) ^ (array === thirdRow)) {
-        console.log("OI")
         array[0].classList.add("winnerRowAnimation")
       }
-      /*console.log(array === firstRow)
-      console.log(array === secondRow)
-      console.log(array === thirdRow)*/
       else if((array === firstColumn) ^ (array === secondColumn) ^ (array === thirdColumn)) {
-        console.log("OI")
         array[0].classList.add("winnerColumnAnimation")
       }
       else if(array === diagonal) {
-        console.log("opa")
-        array[0].classList.add("winnerLeftDiagonalAnimation")
+        array[1].classList.add("winnerLeftDiagonalAnimation")
+      }
+      else if(array === reverseDiagonal) {
+        array[1].classList.add("winnerRightDiagonalAnimation")
       }
       winnerContainerPopUp()
+     setTimeout(() => {
+        array[0].classList.remove("winnerColumnAnimation","winnerRowAnimation")
+        array[1].classList.remove("winnerLeftDiagonalAnimation","winnerRightDiagonalAnimation")
+      },2000)
       winnerPlayer.textContent = array[0].textContent + " is the winner"
   }
 //CHECKING IF NO ONE WON WHEN THE BOARD IS COMPLETELY FILLED
@@ -124,6 +119,7 @@ function checkingWinner(array) {
       winnerContainerPopUp()
       winnerPlayer.textContent = "No one won"
   }}}
+ 
 //checkLastArrItem WILL CHECK IF X OR O SHOULD BE PUSHED TO THE ARRAY BASED ON THE LAST ARRAY ELEMENT, IF X IS THE LAST ELEMENT O SHOULD BE THE NEXT ELEMENT
 function checkLastArrItem() {
   if(lastArrItem == "X" ) {
@@ -131,7 +127,9 @@ function checkLastArrItem() {
   }
   else if(lastArrItem == "O") {
     lastArrItem = "X"
-  }}
+  }
+
+}
 //checkFirstPlayer WILL CHECK IF X OR O SHOULD BE THE FIRST PLAYER, IF THE CHECKBOX IS NOT CHECKED IT WILL START WITH O IF THE USER CHOSE X AND O IF THE USER CHOSE X
 function checkFirstPlayer() {
   if(!firstPlayerCheckbox.checked) {
@@ -155,7 +153,7 @@ function startGame () {
 //WILL TELL WHO WON 
 function winnerContainerPopUp(){(setTimeout(() =>{
   restartGameContainer.style.display = "flex"
-},4000))
+},1000))
 }
 //WILL CHECK IF A COLUMN OR ROW IS FILLED ONLY WITH X OR O, MEANING THAT THE GAME IS OVER
 function checkingWinnerFunctions() {
@@ -181,16 +179,20 @@ function restartGame() {
     positionsArr[i].textContent = "";
   }
   restartGameContainer.style.display = "none"
+  checkLastArrItem() // WILL MAKE THE FIRST PLAYER START THE GAME AGAIN
 }
 //WILL FILL A SQUARE AUTOMATICALLY IN CASE THERE IS ONLY ONE PLAYER 
 function computerPosition() {
   //WILL REMOVE A SQUARE FROM THE ARRAY THAT IS ALREADY FILLED SO THE COMPUTER WON'T FILL THE WRONG SQUARE
    cleanPositionsArr()
     let computerPosition = Math.floor(Math.random() * empty.length)
-    xOrOArr.push(lastArrItem)
-    console.log(lastArrItem)
+    if(restartGameContainer.style.display = "none") {
     empty[computerPosition].textContent = lastArrItem
     checkingWinnerFunctions()//WILL ALSO CHECK IF THERE IS A WINNER EVERYTIME THE COMPUTER FILL A SQUARE
-   checkLastArrItem()
-    console.log(lastArrItem) 
+    xOrOArr.push(lastArrItem)
+    //checkLastArrItem()
+    if(firstPlayerCheckbox.checked) {
+      checkLastArrItem()
+    }
+    
 }
